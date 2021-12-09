@@ -18,6 +18,30 @@ const mark = () => {
         }
     }
 
+    const newGrid = (width, height, start=1) => Array(height).fill(Array(width).fill(0)).map((y, iy) => y.map((x, ix) => (x + ix + (iy * width) + start)))
+
+    const head = (arr) => arr[0];
+
+    const tail = (arr) => arr[arr.length-1];
+
+    const init = (arr) => arr.slice(0, arr.length-1);
+
+    const last = (arr) => arr[arr.length-1];
+    
+    const take = (n, arr) => arr.slice(0, n);
+
+    const drop = (n, arr) => arr.slice(n);
+
+    const reverse = (arr) => arr.reduceRight((acc, x) => acc.concat(x), []);
+
+    const rotLeft = (n, arr) => (n < 1) ? arr : rotLeft(n-1, arr.slice(1).concat(arr[0]));
+
+    const rotRight = (n, arr) => (n < 1) ? arr : rotRight(n-1, [last(arr)].concat(init(arr)));
+
+    const rotGridRight = (arr) => transpose(arr).map(line => reverse(line));
+
+    const rotGridLeft = (arr) => transpose(arr.map(line => reverse(line)));
+
     const transpose = (arr) => arr.map((_,i) => arr.map(row => row[i]));
 
     const sum = (arr) => arr.reduce((acc, x) => acc + x, 0);
@@ -32,7 +56,8 @@ const mark = () => {
 
     const min = (arr) => arr.reduce((acc, x) => (acc < x) ? acc : x, arr[0]);
 
-    const count = (arr, elem) => arr.reduce((acc, x) => (x == elem) ? acc + 1 : acc, 0);
+    const count = (elem, arr) => arr.reduce((acc, x) => (x == elem) ? acc + 1 : acc, 0);
+
 
     const countAll = (arr) => arr.reduce((acc,x) => {
         acc[x] = (acc[x] || 0) + 1;
@@ -52,11 +77,25 @@ const mark = () => {
       return a;
     }
 
+    const printGrid = (grid) => grid.forEach(line => console.log(line));
+
 
 
     return {
         newArray,
+        newGrid,
+        head,
+        tail,
+        init,
+        last,
+        take,
+        drop,
+        reverse,
+        rotLeft,
+        rotRight,
         transpose,
+        rotGridRight,
+        rotGridLeft,
         product,
         sum,
         sort,
@@ -71,7 +110,8 @@ const mark = () => {
         mean,
         char,
         int,
-        log
+        log,
+        printGrid,
     }
 }
 
